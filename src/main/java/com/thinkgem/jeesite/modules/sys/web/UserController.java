@@ -50,7 +50,7 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private SystemService systemService;
-	
+
 	@ModelAttribute
 	public User get(@RequestParam(required=false) String id) {
 		if (StringUtils.isNotBlank(id)){
@@ -59,12 +59,12 @@ public class UserController extends BaseController {
 			return new User();
 		}
 	}
-	
+
 	@RequiresPermissions("sys:user:view")
 	@RequestMapping({"list", ""})
 	public String list(User user, HttpServletRequest request, HttpServletResponse response, Model model) {
-        Page<User> page = systemService.findUser(new Page<User>(request, response), user); 
-        model.addAttribute("page", page);
+		Page<User> page = systemService.findUser(new Page<User>(request, response), user);
+		model.addAttribute("page", page);
 		return "modules/sys/userList";
 	}
 
@@ -104,11 +104,11 @@ public class UserController extends BaseController {
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
 		}
-		
+
 		// 修正引用赋值问题，不知道为何，Company和Office引用的一个实例地址，修改了一个，另外一个跟着修改。
 		user.setCompany(new Office(request.getParameter("company.id")));
 		user.setOffice(new Office(request.getParameter("office.id")));
-		
+
 		// 如果新密码为空，则不更换密码
 		if (StringUtils.isNotBlank(newPassword)) {
 			user.setPassword(SystemService.entryptPassword(newPassword));
@@ -120,7 +120,7 @@ public class UserController extends BaseController {
 			addMessage(model, "保存用户'" + user.getLoginName() + "'失败，登录名已存在");
 			return form(user, model);
 		}
-		
+
 		// 角色数据有效性验证，过滤不在授权内的角色
 		List<Role> roleList = Lists.newArrayList();
 		List<String> roleIdList = user.getRoleIdList();
@@ -130,19 +130,19 @@ public class UserController extends BaseController {
 			}
 		}
 		user.setRoleList(roleList);
-		
+
 		// 保存用户信息
 		systemService.saveUser(user);
-		
+
 		// 清除当前用户缓存
 		if (user.getLoginName().equals(UserUtils.getUser().getLoginName())) {
 			UserUtils.getCacheMap().clear();
 		}
-		
+
 		addMessage(redirectAttributes, "保存用户'" + user.getLoginName() + "'成功");
 		return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
 	}
-	
+
 	@RequiresPermissions("sys:user:edit")
 	@RequestMapping("delete")
 	public String delete(String id, RedirectAttributes redirectAttributes) {
@@ -150,7 +150,7 @@ public class UserController extends BaseController {
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
 		}
-		
+
 		if (UserUtils.getUser().getId().equals(id)) {
 			addMessage(redirectAttributes, "删除用户失败, 不允许删除当前用户");
 		} else if (User.isAdmin(id)) {
@@ -161,29 +161,29 @@ public class UserController extends BaseController {
 		}
 		return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
 	}
-	
+
 	@RequiresPermissions("sys:user:view")
-    @RequestMapping(value = "export", method=RequestMethod.POST)
-    public String exportFile(User user, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "export", method=RequestMethod.POST)
+	public String exportFile(User user, HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
-			String fileName = "用户数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx"; 
-    		Page<User> page = systemService.findUser(new Page<User>(request, response, -1), user); 
-    		new ExportExcel("用户数据", User.class).setDataList(page.getList()).write(response, fileName).dispose();
-    		return null;
+			String fileName = "用户数据" + DateUtils.getDate("yyyyMMddHHmmss") + ".xlsx";
+			Page<User> page = systemService.findUser(new Page<User>(request, response, -1), user);
+			new ExportExcel("用户数据", User.class).setDataList(page.getList()).write(response, fileName).dispose();
+			return null;
 		} catch (Exception e) {
 			addMessage(redirectAttributes, "导出用户失败！失败信息："+e.getMessage());
 		}
 		return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
-    }
+	}
 
 	@RequiresPermissions("sys:user:edit")
-    @RequestMapping(value = "import", method=RequestMethod.POST)
-    public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "import", method=RequestMethod.POST)
+	public String importFile(MultipartFile file, RedirectAttributes redirectAttributes) {
 		if(Global.isDemoMode()){
 			addMessage(redirectAttributes, "演示模式，不允许操作！");
 			return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
 		}
-		
+
 		try {
 			int successNum = 0;
 			int failureNum = 0;
@@ -220,11 +220,11 @@ public class UserController extends BaseController {
 			addMessage(redirectAttributes, "导入用户失败！失败信息：" + e.getMessage());
 		}
 		return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
-    }
-	
+	}
+
 	@RequiresPermissions("sys:user:view")
-    @RequestMapping("import/template")
-    public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
+	@RequestMapping("import/template")
+	public String importFileTemplate(HttpServletResponse response, RedirectAttributes redirectAttributes) {
 		try {
 			String fileName = "用户数据导入模板.xlsx";
 			List<User> list = Lists.newArrayList();
@@ -235,7 +235,7 @@ public class UserController extends BaseController {
 			addMessage(redirectAttributes, "导入模板下载失败！失败信息：" + e.getMessage());
 		}
 		return "redirect:" + Global.getAdminPath() + "/sys/user/?repage";
-    }
+	}
 
 	@ResponseBody
 	@RequiresPermissions("sys:user:edit")
@@ -258,7 +258,7 @@ public class UserController extends BaseController {
 				model.addAttribute("message", "演示模式，不允许操作！");
 				return "modules/sys/userInfo";
 			}
-			
+
 			currentUser = UserUtils.getUser(true);
 			currentUser.setEmail(user.getEmail());
 			currentUser.setPhone(user.getPhone());
@@ -280,7 +280,7 @@ public class UserController extends BaseController {
 				model.addAttribute("message", "演示模式，不允许操作！");
 				return "modules/sys/userModifyPwd";
 			}
-			
+
 			if (SystemService.validatePassword(oldPassword, user.getPassword())){
 				systemService.updatePasswordById(user.getId(), user.getLoginName(), newPassword);
 				model.addAttribute("message", "修改密码成功");
@@ -291,7 +291,7 @@ public class UserController extends BaseController {
 		model.addAttribute("user", user);
 		return "modules/sys/userModifyPwd";
 	}
-    
+
 //	@InitBinder
 //	public void initBinder(WebDataBinder b) {
 //		b.registerCustomEditor(List.class, "roleList", new PropertyEditorSupport(){
