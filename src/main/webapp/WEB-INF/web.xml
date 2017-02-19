@@ -34,6 +34,9 @@
 		classpath*:/spring-context*.xml
 	</param-value>
   </context-param>
+
+  <!-- Production 环境 -->
+<!-- 对应 <beans profile="production">-->
   <context-param>
     <param-name>spring.profiles.default</param-name>
     <param-value>production</param-value>
@@ -80,8 +83,8 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- Ehcache 页面缓存，仅缓存首页和html为后缀的页面 （需要时取消注释）
-  <filter>  
+  <!-- Ehcache 页面缓存，仅缓存首页和html为后缀的页面 （需要时取消注释）-->
+<!--  <filter>
     <filter-name>PageCacheFilter</filter-name>  
         <filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter  
     </filter-class>
