@@ -246,7 +246,7 @@
 			<array_dimension>null</array_dimension>
 			<unsigned>false</unsigned>
 			<args></args>
-			<description>例如：com.thinkgem.jeesite</description>
+			<description>例如：com.thinkgem.jeesite_hibernate</description>
 			<logical_name>包名</logical_name>
 			<physical_name>root_package</physical_name>
 			<type>varchar(n)</type>

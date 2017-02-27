@@ -23,7 +23,8 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<div>
-			<label>请假编号：</label><form:input path="ids" htmlEscape="false" maxlength="50" class="input-small" placeholder="逗号或空格隔开"/>
+			<label>请假编号：</label>
+			<form:input path="ids" htmlEscape="false" maxlength="50" class="input-small" placeholder="逗号或空格隔开"/>
 			<label>创建开始：</label>
 			<input id="createDateStart"  name="createDateStart"  type="text" readonly="readonly" maxlength="20" class="input-small Wdate"  value="<fmt:formatDate value="${leave.createDateStart}" pattern="yyyy-MM-dd"/>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});"/>
 			<label>创建结束：</label>

@@ -86,7 +86,7 @@
   <!-- Ehcache 页面缓存，仅缓存首页和html为后缀的页面 （需要时取消注释）-->
 <!--  <filter>
     <filter-name>PageCacheFilter</filter-name>  
-        <filter-class>com.thinkgem.jeesite.common.filter.PageCachingFilter  
+        <filter-class>com.thinkgem.jeesite_hibernate_hibernate.common.filter.PageCachingFilter
     </filter-class>
   </filter>
   <filter-mapping>  
@@ -141,7 +141,7 @@
   <servlet>
     <servlet-name>CKFinderConnectorServlet</servlet-name>
     <!--<servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>-->
-    <servlet-class>com.thinkgem.jeesite.common.web.CKFinderConnectorServlet</servlet-class>
+    <servlet-class>com.thinkgem.jeesite_hibernate.common.web.CKFinderConnectorServlet</servlet-class>
     <init-param>
       <param-name>XMLConfig</param-name>
       <param-value>/WEB-INF/ckfinder.xml</param-value>
@@ -152,7 +152,7 @@
     </init-param>
     <init-param>
       <param-name>configuration</param-name>
-      <param-value>com.thinkgem.jeesite.common.web.CKFinderConfig</param-value>
+      <param-value>com.thinkgem.jeesite_hibernate.common.web.CKFinderConfig</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
@@ -180,7 +180,7 @@
   <!-- 查看CKFinder的图片 
   <servlet>
   	<servlet-name>cKFinderFilesServlet</servlet-name>
-  	<servlet-class>com.thinkgem.jeesite.common.servlet.CKFinderFilesServlet</servlet-class>
+  	<servlet-class>com.thinkgem.jeesite_hibernate_hibernate.common.servlet.CKFinderFilesServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>cKFinderFilesServlet</servlet-name>
@@ -190,7 +190,7 @@
   <!-- 随机验证码 -->
   <servlet>
     <servlet-name>ValidateCodeServlet</servlet-name>
-    <servlet-class>com.thinkgem.jeesite.common.servlet.ValidateCodeServlet</servlet-class>
+    <servlet-class>com.thinkgem.jeesite_hibernate.common.servlet.ValidateCodeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ValidateCodeServlet</servlet-name>

@@ -2,7 +2,8 @@
 SQLyog v10.2 
 MySQL - 5.1.33-community : Database - jeesite
 *********************************************************************
-*/
+*/
+
 
 
 /*Table structure for table `cms_article` */
