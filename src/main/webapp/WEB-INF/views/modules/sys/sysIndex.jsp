@@ -37,6 +37,7 @@
 						<li class="menu ${firstMenu ? ' active' : ''}"><a class="menu" href="${ctx}/sys/menu/tree?parentId=${menu.id}" target="menuFrame" >${menu.name}</a></li>
 						<c:if test="${firstMenu}">
 							<c:set var="firstMenuId" value="${menu.id}"/>
+							<input name="idxStatus.index" value="a"/>
 						</c:if>
 						<c:set var="firstMenu" value="false"/>
 					</c:if>

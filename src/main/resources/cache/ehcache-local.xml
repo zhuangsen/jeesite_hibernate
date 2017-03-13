@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xml>
 <ehcache updateCheck="false" name="defaultCache">
 
 	<!-- 磁盘缓存位置 -->

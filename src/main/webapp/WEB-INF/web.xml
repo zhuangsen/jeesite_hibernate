@@ -215,5 +215,7 @@
     <error-code>404</error-code>
     <location>/WEB-INF/views/error/404.jsp</location>
   </error-page>
-  
+
+  <!--用于告诉web容器，该项目属于分布式项目-->
+  <distributable/>
 </web-app>

@@ -1,4 +1,4 @@
-package com.thinkgem.jeesite_hibernate.common.test;
+package com.thinkgem.jeesite_hibernate.common.persistence;
 
 import javax.sql.DataSource;
 
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
  * @version 2013-05-15
  */
 @ActiveProfiles("production")
-@ContextConfiguration(locations = {"/applicationContext.xml", "/applicationContext-shiro.xml"})
+@ContextConfiguration(locations = {"/spring-context.xml", "/spring-context-shiro.xml"})
 public class SpringTransactionalContextTests extends AbstractTransactionalJUnit4SpringContextTests {
 
 	protected DataSource dataSource;

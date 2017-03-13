@@ -45,14 +45,14 @@
     <description>获取当前用户对象</description>
     <name>getUser</name>
     <function-class>com.thinkgem.jeesite_hibernate.modules.sys.utils.UserUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUser()</function-signature>
+    <function-signature>com.thinkgem.jeesite_hibernate.modules.sys.entity.User getUser()</function-signature>
     <example>${fns:getUser()}</example>  
   </function>
   <function>
     <description>根据ID获得用户对象</description>
     <name>getUserById</name>
     <function-class>com.thinkgem.jeesite_hibernate.modules.sys.utils.UserUtils</function-class>
-    <function-signature>com.thinkgem.jeesite.modules.sys.entity.User getUserById(java.lang.String)</function-signature>
+    <function-signature>com.thinkgem.jeesite_hibernate.modules.sys.entity.User getUserById(java.lang.String)</function-signature>
     <example>${fns:getUserById(id)}</example>  
   </function>
   

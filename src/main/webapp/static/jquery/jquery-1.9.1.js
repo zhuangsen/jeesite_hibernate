@@ -7572,7 +7572,7 @@ jQuery.fn.load = function( url, params, callback ) {
 			// if "type" variable is undefined, then "GET" method will be used
 			type: type,
 			dataType: "html",
-			data: params
+			data: {params:a},
 		}).done(function( responseText ) {
 
 			// Save response for use in complete callback

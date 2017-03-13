@@ -5,16 +5,15 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.thinkgem.jeesite_hibernate.common.test.SpringTransactionalContextTests;
 import com.thinkgem.jeesite_hibernate.modules.sys.dao.UserDao;
 import com.thinkgem.jeesite_hibernate.modules.sys.entity.User;
 
 /**
- * BaseDaoTest
+ * UserDapTest
  * @author ThinkGem
  * @version 2013-05-15
  */
-public class BaseDaoTest extends SpringTransactionalContextTests {
+public class UserDapTest extends SpringTransactionalContextTests {
 	
 	@Autowired
 	private UserDao userDao;
@@ -33,7 +32,7 @@ public class BaseDaoTest extends SpringTransactionalContextTests {
 		}
 		
 		System.out.print("===== exe hql, return type: Map =====\n");
-		qlString = "select new map(u.name, u.office.name as office_name) from User u";
+		qlString = "select new map(u.name as name, u.office.name as office_name) from User u";
 		mapPage = userDao.find(mapPage, qlString);
 		for (Map<String, Object> o : mapPage.getList()) {
 			System.out.print(o.get("name")+", "+o.get("office_name")+"\n");

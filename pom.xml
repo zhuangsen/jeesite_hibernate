@@ -46,7 +46,7 @@
 		<mssql.driver.version>1.2.4</mssql.driver.version>
 	    
 		<!-- other setting -->
-		<jdk.version>1.6</jdk.version>
+		<jdk.version>1.8</jdk.version>
 		<tomcat.version>2.1</tomcat.version>
 		<jetty.version>7.6.10.v20130312</jetty.version>
 		<webserver.port>8181</webserver.port>

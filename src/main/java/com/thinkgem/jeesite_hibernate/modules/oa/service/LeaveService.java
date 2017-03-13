@@ -108,12 +108,13 @@ public class LeaveService extends BaseService {
 
 	public Page<Leave> find(Page<Leave> page, Leave leave) {
 		DetachedCriteria dc = leaveDao.createDetachedCriteria();
-        List<Criterion> idsCriteria = Lists.newArrayList();
+//        List<Criterion> idsCriteria = Lists.newArrayList();
 		if (StringUtils.isNotBlank(leave.getIds())){
-            for (String id : getIdList(leave.getIds())) {
+            /*for (String id : getIdList(leave.getIds())) {
                 idsCriteria.add(Restrictions.ilike("id",id,MatchMode.ANYWHERE));
             }
-            dc.add(Restrictions.or(idsCriteria));
+            dc.add(Restrictions.or(idsCriteria));*/
+			dc.add(Restrictions.in("id",getIdList(leave.getIds())));
 		}
 		if(leave.getCreateDateStart()!=null) {
 			dc.add(Restrictions.ge("createDate", leave.getCreateDateStart()));
