@@ -35,6 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
@@ -265,6 +266,18 @@ public class SystemService extends BaseService  {
 		deleteActiviti(id);
 	}
 
+	/**
+	 * 获取Key加载信息
+	 */
+	public static boolean printKeyLoadMessage(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("\r\n======================================================================\r\n");
+		sb.append("\r\n    欢迎使用 "+Global.getConfig("productName")+"  - Powered By http://jeesite.com\r\n");
+		sb.append("\r\n======================================================================\r\n");
+		System.out.println(sb.toString());
+		return true;
+	}
+
 	///////////////// Synchronized to the Activiti //////////////////
 
 	/**
@@ -283,7 +296,7 @@ public class SystemService extends BaseService  {
 			 	//同步时候添加所有用户，所有组，以及关联关系，之后增删改用户，增删改角色时不需要判断用户，组是否存在。
 			 	List<User> userList = userDao.findAllList();
 			 	for(User user:userList){
-			 		org.activiti.engine.identity.User activitiUesr = identityService.newUser(ObjectUtils.toString(user.getId()));
+			 		org.activiti.engine.identity.User activitiUesr = identityService.newUser(Objects.toString(user.getId()));
 			 		identityService.saveUser(activitiUesr);
 			 	}
 			 	for(Menu menu:menuDao.findAllActivitiList()){
@@ -298,7 +311,7 @@ public class SystemService extends BaseService  {
 			 		if(!Collections3.isEmpty(menuList)){
 			 			for(Menu menu:menuList) {
 			 				if (StringUtils.isNotEmpty(menu.getActivitiGroupId())){
-			 					identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
+			 					identityService.createMembership(Objects.toString(user.getId()), menu.getActivitiGroupId());
 			 				}
 			 			}
 			 		}
@@ -318,7 +331,7 @@ public class SystemService extends BaseService  {
 				List<User> userList = roleDao.get(role.getId()).getUserList();
 				if(!Collections3.isEmpty(userList)) {
 				 	for(User user:userList) {
-				 		String userId = ObjectUtils.toString(user.getId());
+				 		String userId = Objects.toString(user.getId());
 						org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
 						// 是新增用户
 						if (activitiUser == null) {
@@ -361,7 +374,7 @@ public class SystemService extends BaseService  {
 		}
 		try{
 			if(user!=null) {
-				String userId = ObjectUtils.toString(user.getId());
+				String userId = Objects.toString(user.getId());
 				org.activiti.engine.identity.User activitiUser = identityService.createUserQuery().userId(userId).singleResult();
 				// 是新增用户
 				if (activitiUser == null) {
@@ -383,7 +396,7 @@ public class SystemService extends BaseService  {
 		}
 		try{
 			if(user!=null) {
-				String userId = ObjectUtils.toString(user.getId());
+				String userId = Objects.toString(user.getId());
 				identityService.deleteUser(userId);
 			}
 		}catch (Exception e) {
@@ -411,7 +424,7 @@ public class SystemService extends BaseService  {
 							List<User> userList = role.getUserList();
 							if(!Collections3.isEmpty(userList)) {
 								for(User user:userList) {
-									identityService.createMembership(ObjectUtils.toString(user.getId()), menu.getActivitiGroupId());
+									identityService.createMembership(Objects.toString(user.getId()), menu.getActivitiGroupId());
 								}
 							}
 						}
@@ -453,7 +466,7 @@ public class SystemService extends BaseService  {
 			return;
 		}
 		try{
-			String userId = ObjectUtils.toString(user.getId());
+			String userId = Objects.toString(user.getId());
 			List<Group> activitiGroupList = identityService.createGroupQuery().groupMember(userId).list();
 			if(Collections3.isEmpty(menuList)) {
 				for(Group group:activitiGroupList) {

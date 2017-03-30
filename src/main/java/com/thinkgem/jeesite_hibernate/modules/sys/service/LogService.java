@@ -7,6 +7,7 @@ package com.thinkgem.jeesite_hibernate.modules.sys.service;
 
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.criterion.DetachedCriteria;
@@ -47,12 +48,12 @@ public class LogService extends BaseService {
 			dc.add(Restrictions.eq("createBy.id", createById));
 		}
 		
-		String requestUri = ObjectUtils.toString(paramMap.get("requestUri"));
+		String requestUri = Objects.toString(paramMap.get("requestUri"));
 		if (StringUtils.isNotBlank(requestUri)){
 			dc.add(Restrictions.like("requestUri", "%"+requestUri+"%"));
 		}
 
-		String exception = ObjectUtils.toString(paramMap.get("exception"));
+		String exception = Objects.toString(paramMap.get("exception"));
 		if (StringUtils.isNotBlank(exception)){
 			dc.add(Restrictions.eq("type", Log.TYPE_EXCEPTION));
 		}

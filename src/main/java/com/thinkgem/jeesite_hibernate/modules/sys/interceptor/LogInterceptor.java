@@ -40,7 +40,9 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 			Object handler) throws Exception {
 		System.out.println("==============================执行preHandle==============================");
 		String requestRri = request.getRequestURI();
-		System.out.println("执行preHandlerequestURL:"+requestRri);
+		String uriPrefix = request.getContextPath() + Global.getAdminPath();
+		System.out.println("------------requestRri:"+requestRri);
+		System.out.println("------------uriPrefix:"+uriPrefix);
 		return true;
 	}
 
@@ -50,12 +52,13 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		System.out.println("==============================执行postHandle==============================");
 		String requestRri = request.getRequestURI();
 		String uriPrefix = request.getContextPath() + Global.getAdminPath();
-		System.out.println("执行postHandlerequestURL:"+requestRri);
+		System.out.println("------------requestRri:"+requestRri);
+		System.out.println("------------uriPrefix:"+uriPrefix);
 		if(modelAndView!=null) {
 			String viewName = modelAndView.getViewName();
-			System.out.println("viewName:"+viewName);
+			System.out.println("------------viewName:"+viewName);
 			UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-			System.out.println("deviceType:"+userAgent.getOperatingSystem().getDeviceType());
+			System.out.println("------------deviceType:"+userAgent.getOperatingSystem().getDeviceType());
 			if(viewName.startsWith("modules/") && DeviceType.MOBILE.equals(userAgent.getOperatingSystem().getDeviceType())){
 				modelAndView.setViewName(viewName.replaceFirst("modules", "mobile"));
 			}
@@ -71,8 +74,8 @@ public class LogInterceptor extends BaseService implements HandlerInterceptor {
 		String uriPrefix = request.getContextPath() + Global.getAdminPath();
 
 		System.out.println("==============================执行afterCompletion==============================");
-		System.out.println("requestRri:"+requestRri);
-		System.out.println("uriPrefix:"+uriPrefix);
+		System.out.println("------------requestRri:"+requestRri);
+		System.out.println("------------uriPrefix:"+uriPrefix);
 		
 		if ((StringUtils.startsWith(requestRri, uriPrefix) && (StringUtils.endsWith(requestRri, "/save")
 				|| StringUtils.endsWith(requestRri, "/delete") || StringUtils.endsWith(requestRri, "/import")

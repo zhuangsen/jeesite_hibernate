@@ -2,10 +2,7 @@ package com.thinkgem.jeesite_hibernate.modules.sys.web;
 
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.zip.ZipInputStream;
 
 import javax.servlet.http.HttpServletResponse;
@@ -226,7 +223,7 @@ public class WorkflowController {
 	@ResponseBody
 	public List<Map<String, Object>> todoList(HttpSession session) throws Exception {
 		User user = UserUtils.getUser();
-		String userId = ObjectUtils.toString(user.getId());
+		String userId = Objects.toString(user.getId());
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 
@@ -316,7 +313,7 @@ public class WorkflowController {
 	@RequestMapping(value = "claim/{id}")
 	@ResponseBody
 	public String claim(@PathVariable("id") String taskId, HttpSession session, RedirectAttributes redirectAttributes) {
-		String userId = ObjectUtils.toString(UserUtils.getUser().getId());
+		String userId = Objects.toString(UserUtils.getUser().getId());
 		taskService.claim(taskId, userId);
 		return "success";
 	}

@@ -5,6 +5,7 @@ package com.thinkgem.jeesite_hibernate.modules.oa.service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.activiti.engine.HistoryService;
@@ -87,8 +88,8 @@ public class LeaveService extends BaseService {
 		//过滤出当前用户的任务
 		if(list.size()>0) {
 			List<Task> tasks =Lists.newArrayList();
-			List<Task> todoList = taskService.createTaskQuery().processDefinitionKey(processDefinitionKey).taskAssignee(ObjectUtils.toString(user.getId())).active().list();
-			List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefinitionKey).taskCandidateUser(ObjectUtils.toString(user.getId())).active().list();
+			List<Task> todoList = taskService.createTaskQuery().processDefinitionKey(processDefinitionKey).taskAssignee(Objects.toString(user.getId())).active().list();
+			List<Task> unsignedTasks = taskService.createTaskQuery().processDefinitionKey(processDefinitionKey).taskCandidateUser(Objects.toString(user.getId())).active().list();
 			tasks.addAll(todoList);
 			tasks.addAll(unsignedTasks);
 			Set<String> processInstanceIds = Sets.newHashSet();
@@ -139,7 +140,7 @@ public class LeaveService extends BaseService {
 		leaveDao.flush();
 		String businessKey = leave.getId().toString();
 		// 用来设置启动流程的人员ID，引擎会自动把用户ID保存到activiti:initiator中
-		identityService.setAuthenticatedUserId(ObjectUtils.toString(leave.getCreateBy().getId()));
+		identityService.setAuthenticatedUserId(Objects.toString(leave.getCreateBy().getId()));
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinitionKey, businessKey);
 		String processInstanceId = processInstance.getId();
 		leave.setProcessInstanceId(processInstanceId);

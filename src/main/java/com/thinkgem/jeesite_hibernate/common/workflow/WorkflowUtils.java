@@ -2,6 +2,7 @@ package com.thinkgem.jeesite_hibernate.common.workflow;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
@@ -69,7 +70,7 @@ public class WorkflowUtils {
 		//如果没有签收，签收
 		Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
 		if(task != null && StringUtils.isEmpty(task.getAssignee())){
-			taskService.claim(task.getId(), ObjectUtils.toString(UserUtils.getUser().getId()));
+			taskService.claim(task.getId(), Objects.toString(UserUtils.getUser().getId()));
 		}
 	}
 	
