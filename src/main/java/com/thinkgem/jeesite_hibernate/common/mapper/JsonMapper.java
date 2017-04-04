@@ -1,19 +1,13 @@
-/**
- * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
-/**
- * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.common.mapper;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,18 +22,13 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * 简单封装Jackson，实现JSON String<->Java Object的Mapper.
- * 
  * 封装不同的输出风格, 使用不同的builder函数创建实例.
- * 
- * @author calvin
- * @version 2013-01-15
  */
 public class JsonMapper extends ObjectMapper {
 
@@ -66,11 +55,20 @@ public class JsonMapper extends ObjectMapper {
 		this.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>(){
 			@Override
 			public void serialize(Object value, JsonGenerator jgen,
-					SerializerProvider provider) throws IOException,
-					JsonProcessingException {
+					SerializerProvider provider) throws IOException{
 				jgen.writeString("");
 			}
         });
+		// 进行HTML解码。
+		this.registerModule(new SimpleModule().addSerializer(String.class, new JsonSerializer<String>(){
+			@Override
+			public void serialize(String value, JsonGenerator jgen,
+					SerializerProvider provider) throws IOException{
+				jgen.writeString(StringEscapeUtils.unescapeHtml4(value));
+			}
+        }));
+		// 设置时区
+		this.setTimeZone(TimeZone.getDefault());//getTimeZone("GMT+8:00")
 	}
 
 	/**
@@ -99,7 +97,6 @@ public class JsonMapper extends ObjectMapper {
 	 * 如果集合为空集合, 返回"[]".
 	 */
 	public String toJson(Object object) {
-
 		try {
 			return this.writeValueAsString(object);
 		} catch (IOException e) {
@@ -214,14 +211,24 @@ public class JsonMapper extends ObjectMapper {
 	public ObjectMapper getMapper() {
 		return this;
 	}
-	
+
 	/**
-	 * 转换为JSON字符串
+	 * 对象转换为JSON字符串
 	 * @param object
 	 * @return
 	 */
 	public static String toJsonString(Object object){
 		return JsonMapper.getInstance().toJson(object);
+	}
+	
+	/**
+	 * JSON字符串转换为对象
+	 * @param jsonString
+	 * @param clazz
+	 * @return
+	 */
+	public static Object fromJsonString(String jsonString, Class<?> clazz){
+		return JsonMapper.getInstance().fromJson(jsonString, clazz);
 	}
 	
 	/**

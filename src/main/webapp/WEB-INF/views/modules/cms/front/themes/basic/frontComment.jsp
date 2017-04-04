@@ -81,7 +81,7 @@
 			<label class="control-label">姓名:</label>
 			<div class="controls">
 				<input type="text" name="name" maxlength="11" class="txt required" style="width:100px;" value="匿名"/>
-				<label class="mid">验证码:</label><tags:validateCode name="validateCode" />
+				<label class="mid">验证码:</label><sys:validateCode name="validateCode" />
 				<input class="btn mid" type="submit" value="提 交"/>&nbsp;
 			</div>
 		</div>

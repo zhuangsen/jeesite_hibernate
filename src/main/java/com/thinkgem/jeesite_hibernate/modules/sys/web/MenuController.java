@@ -1,8 +1,3 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.modules.sys.web;
 
 import java.util.List;
@@ -31,8 +26,6 @@ import com.thinkgem.jeesite_hibernate.modules.sys.service.SystemService;
 
 /**
  * 菜单Controller
- * @author ThinkGem
- * @version 2013-3-23
  */
 @Controller
 @RequestMapping(value = "${adminPath}/sys/menu")

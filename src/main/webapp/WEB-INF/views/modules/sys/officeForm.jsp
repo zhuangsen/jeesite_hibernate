@@ -19,19 +19,19 @@
 	
 	<form:form id="inputForm" modelAttribute="office" action="${ctx}/sys/office/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		
 		<div class="control-group">
 			<label class="control-label">上级机构:</label>
 			<div class="controls">
-                <tags:treeselect id="office" name="parent.id" value="${office.parent.id}" labelName="parent.name" labelValue="${office.parent.name}"
+                <sys:treeselect id="office" name="parent.id" value="${office.parent.id}" labelName="parent.name" labelValue="${office.parent.name}"
 					title="机构" url="/sys/office/treeData" extId="${office.id}" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">归属区域:</label>
 			<div class="controls">
-                <tags:treeselect id="area" name="area.id" value="${office.area.id}" labelName="area.name" labelValue="${office.area.name}"
+                <sys:treeselect id="area" name="area.id" value="${office.area.id}" labelName="area.name" labelValue="${office.area.name}"
 					title="区域" url="/sys/area/treeData" cssClass="required"/>
 			</div>
 		</div>

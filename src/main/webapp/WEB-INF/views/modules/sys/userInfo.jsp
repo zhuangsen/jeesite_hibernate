@@ -30,7 +30,7 @@
 		<li><a href="${ctx}/sys/user/modifyPwd">修改密码</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/info" method="post" class="form-horizontal">
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">归属公司:</label>
 			<div class="controls">

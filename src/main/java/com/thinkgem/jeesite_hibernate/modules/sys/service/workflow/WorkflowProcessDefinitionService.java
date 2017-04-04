@@ -62,8 +62,8 @@ public class WorkflowProcessDefinitionService extends BaseService {
 
 	/**
 	 * 部署classpath下面的流程定义
-	 * <p>从属性配置文件中获取属性<b>workflow.modules</b>扫描**deployments**</p>
-	 * <p>然后从每个**deployments/${module}**查找在属性配置文件中的属性**workflow.module.keys.${submodule}**
+	 * <p>从属性配置文件中获取属性<b>workflow.modules</b>扫描**act.deployments**</p>
+	 * <p>然后从每个**act.deployments/${module}**查找在属性配置文件中的属性**workflow.module.keys.${submodule}**
 	 * <p>配置实例：
 	 * <pre>
 	 *	#workflow for deploy
@@ -108,7 +108,7 @@ public class WorkflowProcessDefinitionService extends BaseService {
 	 * @throws IOException		找不到zip文件时
 	 */
 	private void deploySingleProcess(ResourceLoader resourceLoader, String processKey) throws IOException {
-		String classpathResourceUrl = "classpath:/deployments/" + processKey + ".bar";
+		String classpathResourceUrl = "classpath:/act.deployments/" + processKey + ".bar";
 		logger.debug("read workflow from: {}", classpathResourceUrl);
 		Resource resource = resourceLoader.getResource(classpathResourceUrl);
 		InputStream inputStream = resource.getInputStream();

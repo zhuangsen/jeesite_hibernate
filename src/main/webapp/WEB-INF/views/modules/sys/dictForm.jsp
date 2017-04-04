@@ -19,7 +19,7 @@
 	
 	<form:form id="inputForm" modelAttribute="dict" action="${ctx}/sys/dict/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		
 		<div class="control-group">
 			<label class="control-label" for="value">键值:</label>

@@ -28,7 +28,7 @@
 	
 	<form:form id="inputForm" modelAttribute="project" action="${ctx}/prj/project/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		
 		<div class="control-group">
 			<label class="control-label" for="name">名称:</label>
@@ -40,7 +40,7 @@
 			<label class="control-label">数据文件:</label>
 			<div class="controls">
 				<form:hidden path="ermPath" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<tags:ckfinder input="ermPath" type="files" uploadPath="/prj/project" selectMultiple="true" />
+				<sys:ckfinder input="ermPath" type="files" uploadPath="/prj/project" selectMultiple="true" />
 				<span class="help-inline">ERMaster的数据文件，erm文件格式</span>
 			</div>
 		</div>

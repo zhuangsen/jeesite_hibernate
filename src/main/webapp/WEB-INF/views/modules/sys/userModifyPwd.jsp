@@ -23,7 +23,7 @@
 	
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/modifyPwd" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		
 		<div class="control-group">
 			<label class="control-label" for="oldPassword">旧密码:</label>

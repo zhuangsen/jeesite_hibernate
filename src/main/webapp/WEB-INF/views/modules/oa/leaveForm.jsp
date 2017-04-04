@@ -20,7 +20,7 @@
 	
 	<form:form id="inputForm" modelAttribute="leave" action="${ctx}/oa/leave/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		
 		<div class="control-group">
 			<label class="control-label">请假类型：</label>

@@ -1,13 +1,8 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.modules.sys.utils;
 
 import java.util.List;
 import java.util.Map;
-
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
@@ -18,7 +13,6 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 
-import com.google.common.collect.Maps;
 import com.thinkgem.jeesite_hibernate.common.service.BaseService;
 import com.thinkgem.jeesite_hibernate.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite_hibernate.modules.sys.dao.AreaDao;
@@ -35,8 +29,6 @@ import com.thinkgem.jeesite_hibernate.modules.sys.security.SystemAuthorizingReal
 
 /**
  * 用户工具类
- * @author ThinkGem
- * @version 2013-5-29
  */
 public class UserUtils extends BaseService {
 
@@ -89,6 +81,10 @@ public class UserUtils extends BaseService {
 		return getUser();
 	}
 
+	/**
+	 * 获取当前用户角色列表
+	 * @return
+	 */
 	public static List<Role> getRoleList(){
 		@SuppressWarnings("unchecked")
 		List<Role> list = (List<Role>)getCache(CACHE_ROLE_LIST);
@@ -106,6 +102,10 @@ public class UserUtils extends BaseService {
 		return list;
 	}
 	
+	/**
+	 * 获取当前用户授权菜单
+	 * @return
+	 */
 	public static List<Menu> getMenuList(){
 		@SuppressWarnings("unchecked")
 		List<Menu> menuList = (List<Menu>)getCache(CACHE_MENU_LIST);
@@ -121,6 +121,10 @@ public class UserUtils extends BaseService {
 		return menuList;
 	}
 	
+	/**
+	 * 获取当前用户授权的区域
+	 * @return
+	 */
 	public static List<Area> getAreaList(){
 		@SuppressWarnings("unchecked")
 		List<Area> areaList = (List<Area>)getCache(CACHE_AREA_LIST);
@@ -136,6 +140,10 @@ public class UserUtils extends BaseService {
 		return areaList;
 	}
 	
+	/**
+	 * 获取当前用户有权限访问的部门
+	 * @return
+	 */
 	public static List<Office> getOfficeList(){
 		@SuppressWarnings("unchecked")
 		List<Office> officeList = (List<Office>)getCache(CACHE_OFFICE_LIST);

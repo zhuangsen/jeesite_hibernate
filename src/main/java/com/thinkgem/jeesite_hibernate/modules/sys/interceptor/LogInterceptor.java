@@ -1,118 +1,102 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.modules.sys.interceptor;
 
-import java.util.Date;
-
+import java.text.SimpleDateFormat;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.thinkgem.jeesite_hibernate.common.utils.excel.UserAgentUtils;
+import org.springframework.core.NamedThreadLocal;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.thinkgem.jeesite_hibernate.common.config.Global;
-import com.thinkgem.jeesite_hibernate.common.service.BaseService;
-import com.thinkgem.jeesite_hibernate.common.utils.SpringContextHolder;
 import com.thinkgem.jeesite_hibernate.common.utils.StringUtils;
-import com.thinkgem.jeesite_hibernate.modules.sys.dao.LogDao;
-import com.thinkgem.jeesite_hibernate.modules.sys.entity.Log;
-import com.thinkgem.jeesite_hibernate.modules.sys.entity.User;
-import com.thinkgem.jeesite_hibernate.modules.sys.utils.UserUtils;
+import com.thinkgem.jeesite_hibernate.common.config.Global;
+import com.thinkgem.jeesite_hibernate.common.utils.DateUtils;
+import com.thinkgem.jeesite_hibernate.modules.sys.utils.LogUtils;
+import com.thinkgem.jeesite_hibernate.common.service.BaseService;
 
-import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
- * 系统拦截器
- * @author ThinkGem
- * @version 2013-6-6
+ * 日志拦截器
  */
 public class LogInterceptor extends BaseService implements HandlerInterceptor {
 
-	private static LogDao logDao = SpringContextHolder.getBean(LogDao.class);
-	
-	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, 
-			Object handler) throws Exception {
-		System.out.println("==============================执行preHandle==============================");
-		String requestRri = request.getRequestURI();
-		String uriPrefix = request.getContextPath() + Global.getAdminPath();
-		System.out.println("------------requestRri:"+requestRri);
-		System.out.println("------------uriPrefix:"+uriPrefix);
-		return true;
-	}
+    private static final ThreadLocal<Long> startTimeThreadLocal =
+            new NamedThreadLocal<>("ThreadLocal StartTime");
 
-	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, 
-			ModelAndView modelAndView) throws Exception {
-		System.out.println("==============================执行postHandle==============================");
-		String requestRri = request.getRequestURI();
-		String uriPrefix = request.getContextPath() + Global.getAdminPath();
-		System.out.println("------------requestRri:"+requestRri);
-		System.out.println("------------uriPrefix:"+uriPrefix);
-		if(modelAndView!=null) {
-			String viewName = modelAndView.getViewName();
-			System.out.println("------------viewName:"+viewName);
-			UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
-			System.out.println("------------deviceType:"+userAgent.getOperatingSystem().getDeviceType());
-			if(viewName.startsWith("modules/") && DeviceType.MOBILE.equals(userAgent.getOperatingSystem().getDeviceType())){
-				modelAndView.setViewName(viewName.replaceFirst("modules", "mobile"));
-			}
-		}
-	}
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+                             Object handler) throws Exception {
+        logger.debug("==============================执行preHandle==============================");
+        String requestRri = request.getRequestURI();
+        String uriPrefix = request.getContextPath() + Global.getAdminPath();
+        logger.debug("---------requestRri:" + requestRri);
+        logger.debug("---------uriPrefix" + uriPrefix);
+        if (logger.isDebugEnabled()) {
+            long beginTime = System.currentTimeMillis();//1、开始时间
+            startTimeThreadLocal.set(beginTime);        //线程绑定变量（该数据只有当前请求的线程可见）
+            logger.debug("开始计时: {}  URI: {}", new SimpleDateFormat("hh:mm:ss.SSS")
+                    .format(beginTime), request.getRequestURI());
+        }
+        return true;
+    }
 
-	@Override
-	@Transactional(readOnly = false)
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, 
-			Object handler, Exception ex) throws Exception {
-		
-		String requestRri = request.getRequestURI();
-		String uriPrefix = request.getContextPath() + Global.getAdminPath();
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
+        logger.debug("==============================执行postHandle==============================");
+        String requestRri = request.getRequestURI();
+        String uriPrefix = request.getContextPath() + Global.getAdminPath();
+        logger.debug("------------requestRri:" + requestRri);
+        logger.debug("------------uriPrefix:" + uriPrefix);
+        if (modelAndView != null) {
+            String viewName = modelAndView.getViewName();
+            logger.debug("------------viewName:" + viewName);
+            UserAgent userAgent = UserAgent.parseUserAgentString(request.getHeader("User-Agent"));
+            logger.debug("------------deviceType:" + userAgent.getOperatingSystem().getDeviceType());
 
-		System.out.println("==============================执行afterCompletion==============================");
-		System.out.println("------------requestRri:"+requestRri);
-		System.out.println("------------uriPrefix:"+uriPrefix);
-		
-		if ((StringUtils.startsWith(requestRri, uriPrefix) && (StringUtils.endsWith(requestRri, "/save")
-				|| StringUtils.endsWith(requestRri, "/delete") || StringUtils.endsWith(requestRri, "/import")
-				|| StringUtils.endsWith(requestRri, "/updateSort"))) || ex!=null){
-		
-			User user = UserUtils.getUser();
-			if (user!=null && user.getId()!=null){
-				
-				StringBuilder params = new StringBuilder();
-				int index = 0;
-				for (Object param : request.getParameterMap().keySet()){ 
-					params.append((index++ == 0 ? "" : "&") + param + "=");
-					params.append(StringUtils.abbr(StringUtils.endsWithIgnoreCase((String)param, "password")
-							? "" : request.getParameter((String)param), 100));
-				}
-				
-				Log log = new Log();
-				log.setType(ex == null ? Log.TYPE_ACCESS : Log.TYPE_EXCEPTION);
-				log.setCreateBy(user);
-				log.setCreateDate(new Date());
-				log.setRemoteAddr(StringUtils.getRemoteAddr(request));
-				log.setUserAgent(request.getHeader("user-agent"));
-				log.setRequestUri(request.getRequestURI());
-				log.setMethod(request.getMethod());
-				log.setParams(params.toString());
-				log.setException(ex != null ? ex.toString() : "");
-				logDao.save(log);
-				
-				logger.info("save log {type: {}, loginName: {}, uri: {}}, ", log.getType(), user.getLoginName(), log.getRequestUri());
-				
-			}
-		}
-		
-//		logger.debug("最大内存: {}, 已分配内存: {}, 已分配内存中的剩余空间: {}, 最大可用内存: {}", 
-//				Runtime.getRuntime().maxMemory(), Runtime.getRuntime().totalMemory(), Runtime.getRuntime().freeMemory(), 
-//				Runtime.getRuntime().maxMemory()-Runtime.getRuntime().totalMemory()+Runtime.getRuntime().freeMemory()); 
-		
-	}
+            // 如果是手机或平板访问的话，则跳转到手机视图页面。
+            logger.debug(""+viewName.startsWith("modules/"));
+            if (viewName.startsWith("modules/") && UserAgentUtils.isMobileOrTablet(request)) {
+                logger.debug("進入到手機...");
+//                modelAndView.setViewName(viewName.replaceFirst("modules", "mobile"));
+                modelAndView.setViewName("mobile/"+modelAndView.getViewName());
+            }
+            logger.info("ViewName: " + modelAndView.getViewName());
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = false)
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
+                                Object handler, Exception ex) throws Exception {
+
+        String requestRri = request.getRequestURI();
+        String uriPrefix = request.getContextPath() + Global.getAdminPath();
+
+        logger.debug("==============================执行afterCompletion==============================");
+        logger.debug("------------requestRri:" + requestRri);
+        logger.debug("------------uriPrefix:" + uriPrefix);
+
+        if ((StringUtils.startsWith(requestRri, uriPrefix) && (StringUtils.endsWith(requestRri, "/save")
+                || StringUtils.endsWith(requestRri, "/delete") || StringUtils.endsWith(requestRri, "/import")
+                || StringUtils.endsWith(requestRri, "/updateSort"))) || ex != null) {
+            // 保存日志
+            LogUtils.saveLog(request, handler, ex, null);
+        }
+
+        // 打印JVM信息。
+        if (logger.isDebugEnabled()) {
+            long beginTime = startTimeThreadLocal.get();//得到线程绑定的局部变量（开始时间）
+            long endTime = System.currentTimeMillis();    //2、结束时间
+            logger.debug("计时结束：{}  耗时：{}  URI: {}  最大内存: {}m  已分配内存: {}m  已分配内存中的剩余空间: {}m  最大可用内存: {}m",
+                    new SimpleDateFormat("hh:mm:ss.SSS").format(endTime), DateUtils.formatDateTime(endTime - beginTime),
+                    request.getRequestURI(), Runtime.getRuntime().maxMemory() / 1024 / 1024, Runtime.getRuntime().totalMemory() / 1024 / 1024, Runtime.getRuntime().freeMemory() / 1024 / 1024,
+                    (Runtime.getRuntime().maxMemory() - Runtime.getRuntime().totalMemory() + Runtime.getRuntime().freeMemory()) / 1024 / 1024);
+        }
+
+    }
 
 }

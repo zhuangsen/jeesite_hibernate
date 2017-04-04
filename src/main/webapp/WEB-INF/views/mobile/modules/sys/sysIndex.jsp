@@ -4,7 +4,7 @@
 <head>
 	<title>${fns:getConfig('productName')}</title>
 	<meta name="decorator" content="default_mb"/>
-	<script type="text/javascript"> 
+	<script type="text/javascript">
 		$(document).ready(function() {
 		});
 	</script>

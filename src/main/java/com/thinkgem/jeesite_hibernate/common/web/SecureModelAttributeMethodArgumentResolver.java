@@ -30,10 +30,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ExtendedServletRequ
 
 import com.thinkgem.jeesite_hibernate.common.utils.Reflections;
 
-/**
- * @author 薛定谔的猫
- *
- */
 public class SecureModelAttributeMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
 	@SuppressWarnings("unused")

@@ -1,8 +1,3 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.modules.sys.web;
 
 import java.io.BufferedOutputStream;
@@ -37,8 +32,6 @@ import com.thinkgem.jeesite_hibernate.modules.sys.utils.UserUtils;
 
 /**
  * 登录Controller
- * @author ThinkGem
- * @version 2013-5-31
  */
 @Controller
 public class LoginController extends BaseController{
@@ -46,30 +39,37 @@ public class LoginController extends BaseController{
 	/**
 	 * 管理登录
 	 */
-	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
-	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
+	@RequestMapping(value = "${adminPath}/login", method = {RequestMethod.POST,RequestMethod.GET})
+	public String login(@RequestParam(value = FormAuthenticationFilter.DEFAULT_USERNAME_PARAM,required = false) String username,
+						HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = UserUtils.getUser();
 		// 如果已经登录，则跳转到管理首页
 		if(user.getId() != null){
 			return "redirect:"+Global.getAdminPath();
 		}
+		//授权失败，跳转到登录页面
+		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
+		model.addAttribute("isValidateCodeLogin", isValidateCodeLogin(username, true, false));
 		return "modules/sys/sysLogin";
 	}
 
 	/**
 	 * 登录失败，真正登录的POST请求由Filter完成
 	 */
-	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
-	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username, HttpServletRequest request, HttpServletResponse response, Model model) {
+/*	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
+	public String login(@RequestParam(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM) String username,
+						HttpServletRequest request, HttpServletResponse response, Model model) {
 		User user = UserUtils.getUser();
 		// 如果已经登录，则跳转到管理首页
 		if(user.getId() != null){
 			return "redirect:"+Global.getAdminPath();
 		}
+
+		//授权失败，跳转到登录页面
 		model.addAttribute(FormAuthenticationFilter.DEFAULT_USERNAME_PARAM, username);
 		model.addAttribute("isValidateCodeLogin", isValidateCodeLogin(username, true, false));
 		return "modules/sys/sysLogin";
-	}
+	}*/
 
 	/**
 	 * 登录成功，进入管理首页

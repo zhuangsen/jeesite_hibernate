@@ -1,8 +1,3 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.common.service;
 
 import java.util.Iterator;
@@ -21,8 +16,6 @@ import com.thinkgem.jeesite_hibernate.modules.sys.entity.User;
 
 /**
  * Service基类
- * @author ThinkGem
- * @version 2013-05-15
  */
 public abstract class BaseService {
 	
@@ -30,7 +23,7 @@ public abstract class BaseService {
 	 * 日志对象
 	 */
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	/**
 	 * 数据范围过滤
 	 * @param user 当前用户对象，通过“UserUtils.getUser()”获取

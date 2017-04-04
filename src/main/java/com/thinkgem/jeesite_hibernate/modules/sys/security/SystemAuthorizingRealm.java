@@ -175,7 +175,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 		public Map<String, Object> getCacheMap() {
 			if (cacheMap==null){
-				cacheMap = new HashMap<String, Object>();
+				cacheMap = new HashMap<>();
 			}
 			return cacheMap;
 		}

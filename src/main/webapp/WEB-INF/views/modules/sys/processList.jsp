@@ -10,7 +10,7 @@
 	</script>
 </head>
 <body>
-	<tags:message content="${message}"/>
+	<sys:message content="${message}"/>
 	<table class="table table-striped table-bordered ">
 		<thead>
 			<tr>

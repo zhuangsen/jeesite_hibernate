@@ -1,7 +1,5 @@
 /**
  * Copyright (c) 2005-2012 springside.org.cn
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
  */
 package com.thinkgem.jeesite_hibernate.common.beanvalidator;
 
@@ -26,8 +24,6 @@ import com.google.common.collect.Maps;
  * 3. Map<propertyPath, message>
  * 
  * 详情见wiki: https://github.com/springside/springside4/wiki/HibernateValidator
- * @author calvin
- * @version 2013-01-15
  */
 public class BeanValidators {
 

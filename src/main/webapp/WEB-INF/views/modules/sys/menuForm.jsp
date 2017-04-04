@@ -19,11 +19,11 @@
 	
 	<form:form id="inputForm" modelAttribute="menu" action="${ctx}/sys/menu/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">上级菜单:</label>
 			<div class="controls">
-                <tags:treeselect id="menu" name="parent.id" value="${menu.parent.id}" labelName="parent.name" labelValue="${menu.parent.name}"
+                <sys:treeselect id="menu" name="parent.id" value="${menu.parent.id}" labelName="parent.name" labelValue="${menu.parent.name}"
 					title="菜单" url="/sys/menu/treeData" extId="${menu.id}" cssClass="required"/>
 			</div>
 		</div>
@@ -48,7 +48,7 @@
 		<div class="control-group">
 			<label class="control-label" for="icon">图标:</label>
 			<div class="controls">
-				<tags:iconselect id="icon" name="icon" value="${menu.icon}"></tags:iconselect>
+				<sys:iconselect id="icon" name="icon" value="${menu.icon}"></sys:iconselect>
 			</div>
 		</div>
 		<div class="control-group">

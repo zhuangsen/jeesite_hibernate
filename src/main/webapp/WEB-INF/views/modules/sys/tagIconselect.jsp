@@ -76,7 +76,7 @@
     <li><i class="icon-qrcode"></i>qrcode</li>
     <li><i class="icon-barcode"></i>barcode</li>
     <li><i class="icon-tag"></i>tag</li>
-    <li><i class="icon-tags"></i>tags</li>
+    <li><i class="icon-sys"></i>sys</li>
     <li><i class="icon-book"></i>book</li>
     <li><i class="icon-bookmark"></i>bookmark</li>
     <li><i class="icon-print"></i>print</li>

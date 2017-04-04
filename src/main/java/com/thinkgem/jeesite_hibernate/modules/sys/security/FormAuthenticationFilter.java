@@ -1,8 +1,3 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.modules.sys.security;
 
 import javax.servlet.ServletRequest;
@@ -14,8 +9,6 @@ import org.springframework.stereotype.Service;
 
 /**
  * 表单验证（包含验证码）过滤类
- * @author ThinkGem
- * @version 2013-5-19
  */
 @Service
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
@@ -24,13 +17,6 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 
 	private String captchaParam = DEFAULT_CAPTCHA_PARAM;
 
-	public String getCaptchaParam() {
-		return captchaParam;
-	}
-
-	protected String getCaptcha(ServletRequest request) {
-		return WebUtils.getCleanParam(request, getCaptchaParam());
-	}
 
 	@Override
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
@@ -45,4 +31,11 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		return new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha);
 	}
 
+	public String getCaptchaParam() {
+		return captchaParam;
+	}
+
+	protected String getCaptcha(ServletRequest request) {
+		return WebUtils.getCleanParam(request, getCaptchaParam());
+	}
 }

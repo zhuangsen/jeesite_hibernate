@@ -27,18 +27,18 @@
 	
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label" for="company">归属公司:</label>
 			<div class="controls">
-                <tags:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
+                <sys:treeselect id="company" name="company.id" value="${user.company.id}" labelName="company.name" labelValue="${user.company.name}"
 					title="公司" url="/sys/office/treeData?type=1" cssClass="required"/>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label" for="office">归属部门:</label>
 			<div class="controls">
-                <tags:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
+                <sys:treeselect id="office" name="office.id" value="${user.office.id}" labelName="office.name" labelValue="${user.office.name}"
 					title="部门" url="/sys/office/treeData?type=2" cssClass="required"/>
 			</div>
 		</div>

@@ -60,6 +60,7 @@ CREATE TABLE sys_log
 	type char(1) DEFAULT '1',
 	create_by varchar2(64),
 	create_date timestamp,
+	title varchar2(255) DEFAULT '',
 	remote_addr varchar2(255),
 	user_agent varchar2(255),
 	request_uri varchar2(255),

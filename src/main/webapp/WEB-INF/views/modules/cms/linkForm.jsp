@@ -29,12 +29,12 @@
 	
 	<form:form id="inputForm" modelAttribute="link" action="${ctx}/cms/link/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		
 		<div class="control-group">
 			<label class="control-label">归属栏目:</label>
 			<div class="controls">
-                <tags:treeselect id="category" name="category.id" value="${link.category.id}" labelName="category.name" labelValue="${link.category.name}"
+                <sys:treeselect id="category" name="category.id" value="${link.category.id}" labelName="category.name" labelValue="${link.category.name}"
 					title="栏目" url="/cms/category/treeData" module="link" selectScopeModule="true" notAllowSelectRoot="false" notAllowSelectParent="true" cssClass="required"/>
 			</div>
 		</div>
@@ -53,7 +53,7 @@
 			<label class="control-label">链接图片:</label>
 			<div class="controls">
 				<form:hidden path="image" htmlEscape="false" maxlength="255" class="input-xlarge"/>
-				<tags:ckfinder input="image" type="images" uploadPath="/cms/link" selectMultiple="false"/>
+				<sys:ckfinder input="image" type="images" uploadPath="/cms/link" selectMultiple="false"/>
 			</div>
 		</div>
 		<div class="control-group">

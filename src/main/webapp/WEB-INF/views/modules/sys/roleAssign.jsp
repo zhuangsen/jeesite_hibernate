@@ -18,7 +18,7 @@
 			<span class="span4">数据范围: ${fns:getDictLabel(dictvalue, 'sys_data_scope', '')}</span>
 		</div>
 	</div>
-	<tags:message content="${message}"/>
+	<sys:message content="${message}"/>
 	<div class="breadcrumb">
 		<form id="assignRoleForm" action="" method="post" class="hide"></form>
 		<a id="assignButton" href="javascript:" class="btn btn-primary">分配角色</a>

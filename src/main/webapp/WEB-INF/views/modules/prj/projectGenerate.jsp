@@ -33,7 +33,7 @@
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="project" action="${ctx}/prj/project/generate" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
-		<tags:message content="${message}"/>
+		<sys:message content="${message}"/>
 		<div class="control-group">
 			<label class="control-label">名称:</label>
 			<div class="controls">

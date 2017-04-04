@@ -22,7 +22,7 @@
 		<li class="active"><a href="${ctx}/sys/area/">区域列表</a></li>
 		<shiro:hasPermission name="sys:area:edit"><li><a href="${ctx}/sys/area/form">区域添加</a></li></shiro:hasPermission>
 	</ul>
-	<tags:message content="${message}"/>
+	<sys:message content="${message}"/>
 	<table id="treeTable" class="table table-striped table-bordered table-condensed">
 		<tr><th>区域名称</th><th>区域编码</th><th>区域类型</th><th>备注</th><shiro:hasPermission name="sys:area:edit"><th>操作</th></shiro:hasPermission></tr>
 		<c:forEach items="${list}" var="area">

@@ -38,7 +38,7 @@
 				<prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>
 
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.format_sql">false</prop>
 				<!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
 			</props>
 		</property>
@@ -95,9 +95,9 @@
 			<property name="testOnBorrow" value="false" />
 			<property name="testOnReturn" value="false" />
 			
-			<!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用）
+			<!-- 打开PSCache，并且指定每个连接上PSCache的大小（Oracle使用） -->
 			<property name="poolPreparedStatements" value="true" />
-			<property name="maxPoolPreparedStatementPerConnectionSize" value="20" /> -->
+			<property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
 			
 			<!-- 配置监控统计拦截的filters -->
 		    <property name="filters" value="stat" /> 
