@@ -1,8 +1,3 @@
-/**
- * Copyright &copy; 2012-2013 <a href="https://github.com/thinkgem/jeesite">JeeSite</a> All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- */
 package com.thinkgem.jeesite_hibernate.modules.sys.service;
 
 import com.google.common.collect.Maps;
@@ -39,8 +34,6 @@ import java.util.Objects;
 
 /**
  * 系统管理，安全相关实体的管理类,包括用户、角色、菜单.
- * @author ThinkGem
- * @version 2013-5-15
  */
 @Service
 @Transactional(readOnly = true)
